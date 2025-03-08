@@ -7,7 +7,7 @@ print("--------------| PROJECT - 1 : By Tanish Choudhary |--------------")
 # Scanning Multiple Targets
 def scan(target):
     converted_ip = check_ip(target) # Returing Ip if domain provided
-    print('\n' + '[-_0 Scanning Target] ' + str(target))
+    print('\n' + '[+|+] Scanning Target] ' + str(target))
     for port in range(1,500):
         scan_port(converted_ip, port) # Function called for scanninng each target serperated by ','
 
@@ -35,9 +35,9 @@ def scan_port(ipaddress, port):
         sock.connect((ipaddress, port))
         try:
             banner = get_banner(sock)
-            print('[+] Open Port ' + str(port) + ' : ' + str(banner.decode().strip('\n')))
+            print('[+|+] OPEN PORT ' + str(port) + ' : ' + str(banner.decode().strip('\n')))
         except:
-            print('[+] Open Port ' + str(port))
+            print('[+|+] OPEN PORT ' + str(port))
     except:
         # Not Printing Closed Ports
         pass
@@ -46,7 +46,7 @@ def scan_port(ipaddress, port):
 # Main Function
 if __name__ == "__main__": 
     # Getting all targets from user
-    targets = input('[+] Enter Target/s To Scan(split multiple targets with ,): ')
+    targets = input('[+|+] ENTER TARGETS TO SCAN (SEPERATE THEM BY ,): ')
     # Seperating Targets from ','
     if ',' in targets:
         for ip_add in targets.split(','):
@@ -54,3 +54,5 @@ if __name__ == "__main__":
     else:
         # Scanning if single target was provided
         scan(targets)
+
+# Project Finished
