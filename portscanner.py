@@ -1,58 +1,44 @@
-# Importing Libraries
+'''
+1. Timeout Function [DONE]
+2. domain to ip convertor [DONE]
+3. Multiple Targets []
+4. Banner Details []
+'''
+
 import socket
-from IPy import IP
+from IPy import *
 
-print("--------------| PROJECT - 1 : By Tanish Choudhary |--------------")
+print("------------| PROJECT - 1 | BY TANISH CHOUDHARY |------------")
 
-# Scanning Multiple Targets
-def scan(target):
-    converted_ip = check_ip(target) # Returing Ip if domain provided
-    print('\n' + '[+|+] Scanning Target] ' + str(target))
-    for port in range(1,500):
-        scan_port(converted_ip, port) # Function called for scanninng each target serperated by ','
-
-
-# Function to return IP if domain or web link provided
-def check_ip(ip):
+def ipcheck(ipaddress):
     try:
-        # Returns ip if Ip was provided
-        IP(ip)
-        return(ip)
+        IP(ipaddress)
+        return ipaddress
     except ValueError:
-        # return value of domain into IP 
-        return socket.gethostbyname(ip)
+        real_ip = socket.gethostbyname(ipaddress)
+        return real_ip
+    
 
-# Grabbing Banner 
-def get_banner(s):
-    return s.recv(1024)
+def scan_trgt(ipaddress):
+    real_ip = ipcheck(ipaddress)
+    print(f"\n [+ | +] SCANNING TARGET {ipaddress}: ",real_ip)
+    for port in range(1,100):
+        scan_target(real_ip,port)
 
-# Function for Scanning for open Ports
-def scan_port(ipaddress, port):
+def scan_target(ipaddress, port):
     try:
         sock = socket.socket()
-        # Timeout function for removing extra time to return port status
-        sock.settimeout(0.5)
+        sock.settimeout(0.1)
         sock.connect((ipaddress, port))
-        try:
-            banner = get_banner(sock)
-            print('[+|+] OPEN PORT ' + str(port) + ' : ' + str(banner.decode().strip('\n')))
-        except:
-            print('[+|+] OPEN PORT ' + str(port))
+        print(f"[+] Port {port} Is Open")
     except:
-        # Not Printing Closed Ports
+        # print("[-] Port ",port," Is Closed")
         pass
+        
 
-
-# Main Function
-if __name__ == "__main__": 
-    # Getting all targets from user
-    targets = input('[+|+] ENTER TARGETS TO SCAN (SEPERATE THEM BY ,): ')
-    # Seperating Targets from ','
-    if ',' in targets:
-        for ip_add in targets.split(','):
-            scan(ip_add.strip(' '))
-    else:
-        # Scanning if single target was provided
-        scan(targets)
-
-# Project Finished
+targets = input("Enter Target/s Address (for multiple addresses ,): ")
+if ',' in targets:
+    for target in targets.split(','):
+        scan_trgt(target.strip(' '))
+else:
+    scan_trgt(targets)
