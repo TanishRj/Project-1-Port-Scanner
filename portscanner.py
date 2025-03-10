@@ -1,7 +1,7 @@
 '''
 1. Timeout Function [DONE]
 2. domain to ip convertor [DONE]
-3. Multiple Targets []
+3. Multiple Targets [DONE]
 4. Banner Details []
 '''
 
