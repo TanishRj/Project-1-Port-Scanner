@@ -19,6 +19,9 @@ def ipcheck(ipaddress):
         return real_ip
     
 
+def getbnr(sock):
+    return sock.recv(1024)
+
 def scan_trgt(ipaddress):
     real_ip = ipcheck(ipaddress)
     print(f"\n [+ | +] SCANNING TARGET {ipaddress}: ",real_ip)
@@ -30,7 +33,11 @@ def scan_target(ipaddress, port):
         sock = socket.socket()
         sock.settimeout(0.1)
         sock.connect((ipaddress, port))
-        print(f"[+] Port {port} Is Open")
+        try:
+            banner = getbnr(sock)
+            print(f"[+] Port {port} is Open : {banner}")
+        except:
+            print(f"[+] Port {port} Is Open")
     except:
         # print("[-] Port ",port," Is Closed")
         pass
